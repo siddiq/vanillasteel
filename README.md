@@ -3,13 +3,13 @@
 ## start backend
 
 ```
-poetry run uvicorn app.main:app --reload
+make run_all
 ```
 
-Init db
+## Init db
 
 ```
-PYTHONPATH=. poetry run python app/db/seed.py ../files/inventory.csv
+make init_db
 ```
 
 # Decisions

@@ -24,3 +24,16 @@ docker_rebuild:
 
 # Run all (run Docker and then FastAPI server)
 run_all: docker_up run
+
+# Test
+test:
+	PYTHONPATH=$(PYTHONPATH) poetry run pytest
+
+# Run tests and check coverage
+coverage:
+	PYTHONPATH=$(PYTHONPATH) poetry run pytest --cov=app --cov-report=term-missing
+
+# Clean up coverage files
+clean:
+	rm -f .coverage
+	@echo "Coverage files cleaned."

@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
 from sqlalchemy.orm import sessionmaker
 import os
 from dotenv import load_dotenv
@@ -20,27 +20,3 @@ def get_db():
         yield db
     finally:
         db.close()
-
-
-
-# import asyncpg
-
-# async def connect_to_db():
-#     # Define the connection parameters
-#     connection = await asyncpg.connect(
-#         user='myuser',
-#         password='mypassword',
-#         database='mydatabase',
-#         host='localhost',
-#         port='5432'
-#     )
-    
-#     # Execute a query
-#     result = await connection.fetch("SELECT version();")
-    
-#     print(f"Connected to - {result[0]}")
-    
-#     # Close the connection
-#     await connection.close()
-
-#     return result[0]
