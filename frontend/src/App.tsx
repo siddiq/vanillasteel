@@ -1,23 +1,23 @@
-import '@material/web/button/filled-button.js'
-import '@material/web/button/outlined-button.js'
-import '@material/web/checkbox/checkbox.js'
-import '@material/web/slider/slider.js'
-
+import React from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { Sidebar } from './components/Sidebar'
+import { Dashboard } from './pages/Dashboard'
+import { Search } from './pages/Search'
 import './App.css'
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div className="App">
-      hello
-      <label>
-        Material 3<md-checkbox checked></md-checkbox>
-      </label>
-      <md-outlined-button>Back</md-outlined-button>
-      <md-filled-button>Next</md-filled-button>
-      slider here
-      <md-slider range value-start="25" value-end="75"></md-slider>
-      new slider
-    </div>
+    <Router>
+      <div className="app-container">
+        <Sidebar />
+        <div className="main-content">
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/search" element={<Search />} />
+          </Routes>
+        </div>
+      </div>
+    </Router>
   )
 }
 
