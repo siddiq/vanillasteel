@@ -64,7 +64,7 @@ export const Dashboard: React.FC = () => {
       <h2>Products</h2>
       <p>total products {products.length}</p>
       <p>total volume (t) {totalVolumeInTons}</p>
-      <button onClick={handleRefresh}>Refresh</button>
+      <md-filled-button onClick={handleRefresh}>Reload</md-filled-button>
       <md-list>
         {products.slice(0, 5).map((product: Product) => (
           <md-list-item key={product.product_number}>

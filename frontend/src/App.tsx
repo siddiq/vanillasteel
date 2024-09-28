@@ -4,6 +4,7 @@ import { Sidebar } from './components/Sidebar'
 import { Dashboard } from './pages/Dashboard'
 import { Search } from './pages/Search'
 import { About } from './pages/About'
+
 import './App.css'
 
 const App: React.FC = () => {

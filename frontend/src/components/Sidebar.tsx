@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import '@material/web/all'
 import './Sidebar.css'
 
 export const Sidebar: React.FC = () => {
