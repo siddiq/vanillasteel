@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.product.product_api import router as product_router
+from app.products.product_api import router as product_router
 from app.db.database import engine
 from app.models.product_model import Base
 from contextlib import asynccontextmanager
@@ -15,7 +15,7 @@ app = FastAPI(lifespan=lifespan)
 
 @app.get("/ping")
 def ping():
-    return "pong"
+    return {"data": "pong"}
 
 # Include API routes
-app.include_router(product_router, prefix="/v1/product")
+app.include_router(product_router, prefix="/v1/products")
