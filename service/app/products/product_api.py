@@ -8,8 +8,7 @@ router = APIRouter()
 @router.get("")
 def get_all_products(db: Session = Depends(get_db)):
     all = fetch_all_products(db)
-    first_ten = all[:10]
-    return first_ten
+    return all
 
 @router.get("/{product_number}")
 def get_product_by_product_number(product_number: str, db: Session = Depends(get_db)):
