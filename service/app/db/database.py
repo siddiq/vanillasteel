@@ -17,6 +17,11 @@ DATABASE_URL = os.getenv(
     "DATABASE_URL", "postgresql://myuser:mypassword@localhost:5432/mydatabase"
 )
 
+# if database url starts with postgres:// change it to start with postgresql://
+if DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://")
+    print("database url prefix fixed")
+
 # Log the database connection attempt (avoid logging sensitive information)
 logger.info("Connecting to the database...")
 
