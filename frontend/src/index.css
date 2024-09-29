@@ -2,6 +2,7 @@
   --md-sys-color-primary: #1976d2; /* Primary color */
   --md-sys-color-secondary: #ff4081; /* Secondary color */
   --md-sys-typescale-body1-font-family: 'Roboto', sans-serif; /* Font family */
+  --md-sys-color-error: red;
 }
 
 body {

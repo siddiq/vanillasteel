@@ -1,14 +1,26 @@
 .sidebar {
   width: 250px;
   height: 100vh;
-  background-color: #f5f5f5;
+  background-color: #003eff;
   padding: 16px;
-}
-
-.sidebar md-list-item {
-  margin-bottom: 8px;
 }
 
 .sidebar md-list {
   background-color: transparent;
+}
+
+.sidebar md-list-item md-icon,
+.sidebar md-list-item div {
+  color: white;
+  font-weight: bold;
+}
+
+.sidebar md-list-item {
+  margin-bottom: 8px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.sidebar md-list-item:hover {
+  background-color: #1a73e8;
+  cursor: pointer;
 }

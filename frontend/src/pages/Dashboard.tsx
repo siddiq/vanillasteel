@@ -55,20 +55,28 @@ export const Dashboard: React.FC = () => {
   const { products, loading, error, reloadProducts } = useProducts() as {
     products: Product[]
     loading: boolean
-    error: ErrorType | null // Assuming error can be null or have a message
+    error: ErrorType | null
     reloadProducts: () => void
   }
 
   if (loading) {
-    return <md-circular-progress indeterminate></md-circular-progress>
+    return (
+      <div style={{ textAlign: 'center' }}>
+        <md-circular-progress indeterminate></md-circular-progress>
+      </div>
+    )
   }
 
   if (error) {
     return (
-      <md-filled-text-field
-        disabled
-        value={`Error: ${error.message}`}
-      ></md-filled-text-field>
+      <div className="backend-error">
+        <p>
+          <md-typography>Network Error: Unable to fetch data.</md-typography>
+        </p>
+        <p>
+          <md-filled-button onClick={reloadProducts}>Retry</md-filled-button>
+        </p>
+      </div>
     )
   }
 
@@ -76,10 +84,6 @@ export const Dashboard: React.FC = () => {
     (volume: number, product: Product) => volume + product.weight,
     0
   )
-
-  const handleRefresh = () => {
-    reloadProducts()
-  }
 
   const sortedAndPaged = sortAndPage(
     products,
@@ -98,9 +102,10 @@ export const Dashboard: React.FC = () => {
   return (
     <div className="dashboard">
       <h1>Dashboard Page</h1>
-      <h2>Products</h2>
-      <p>Total products = {products.length}</p>
+
+      <p>Total number of Line Items = {products.length}</p>
       <p>Total volume (t) = {totalVolumeInTons.toFixed(2)}</p>
+
       <div className="page-number">
         Page {pageNumber + 1} of {totalPages}
       </div>
@@ -116,7 +121,7 @@ export const Dashboard: React.FC = () => {
         totalPages={totalPages}
         setPageNumber={setPageNumber}
       />
-      <md-filled-button onClick={handleRefresh}>Refresh Data</md-filled-button>
+      <md-filled-button onClick={reloadProducts}>Refresh Data</md-filled-button>
     </div>
   )
 }

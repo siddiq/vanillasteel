@@ -43,16 +43,9 @@ make init_db
 
 # TODO
 
-1. setup postgresql in docker
-   create a docker compose for dev that runs postgresql
+dont reload inventory when changing pages
+search page
 
-2. makefile
-
-# imporanbt todo
-
-docker compose
-
-deployment
-pipelines?
-
-server cache
+- checks if preferences file is already saved, then use it
+- show a button to upload it to server
+-

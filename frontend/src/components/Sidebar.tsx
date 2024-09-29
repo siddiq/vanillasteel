@@ -13,6 +13,8 @@ export const Sidebar: React.FC = () => {
 
   return (
     <div className="sidebar">
+      <img src="./logo.png" width="250" alt="Vanilla Steel Logo" />
+
       <md-list>
         {menuItems.map((item) => (
           <Link
