@@ -33,10 +33,16 @@ export const WrapperProductsTable = ({ products }: Props) => {
     setDir(dir)
   }
 
+  const totalItems = products.length.toLocaleString('en-US')
+  const totalVolumeInTonsFormatted = totalVolumeInTons.toLocaleString('en-US', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  })
+
   return (
     <div className="products-table">
-      <p>Total number of Line Items = {products.length}</p>
-      <p>Total volume (t) = {totalVolumeInTons.toFixed(2)}</p>
+      <p>Total number of Line Items = {totalItems}</p>
+      <p>Total volume (t) = {totalVolumeInTonsFormatted}</p>
       <div className="page-number">
         Page {pageNumber + 1} of {totalPages}
       </div>

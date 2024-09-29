@@ -17,9 +17,10 @@ export const Search: React.FC = () => {
     ;(async function () {
       try {
         setLoading(true)
-        preferenceHook.getPreferences()
+        await preferenceHook.getPreferences()
 
         setProducts(await fetchProductsMatchedBtPreference())
+
         setError(null)
       } catch (err) {
         setError(new Error('Failed to fetch products'))
@@ -67,14 +68,18 @@ export const Search: React.FC = () => {
       return
     }
 
-    preferenceHook.uploadFile(selectedFile)
+    await preferenceHook.uploadFile(selectedFile)
+    setProducts(await fetchProductsMatchedBtPreference())
   }
+
+  const preferencesAreAvailable =
+    preferenceHook.preferences && preferenceHook.preferences.length > 0
 
   return (
     <div>
       <h1>Search Page</h1>
       <p>
-        {preferenceHook.preferences && preferenceHook.preferences.length > 0
+        {preferencesAreAvailable
           ? 'Current preferece has ' +
             preferenceHook.preferences.length +
             ' rules'
@@ -125,7 +130,9 @@ export const Search: React.FC = () => {
       {preferenceHook.message && <p>{preferenceHook.message}</p>}
       {error && <p style={{ color: 'red' }}>{preferenceHook.error}</p>}
 
-      <WrapperProductsTable products={products} />
+      {preferencesAreAvailable ? (
+        <WrapperProductsTable products={products} />
+      ) : null}
     </div>
   )
 }
