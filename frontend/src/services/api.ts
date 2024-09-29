@@ -27,7 +27,6 @@ export const fetchPreference = async () => {
 }
 
 export const updatePreference = async (file: File) => {
-  // Create a FormData object to send the file in the POST request
   const formData = new FormData()
   formData.append('file', file)
 

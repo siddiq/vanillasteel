@@ -1,20 +1,25 @@
-import React, { useState } from 'react'
-import { fetchPreference, updatePreference } from '../services/api'
+import React, { useEffect, useState } from 'react'
+import { usePreference } from '../hooks/usePreference'
 
 export const Search: React.FC = () => {
-  // State to hold the selected file
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
-  const [message, setMessage] = useState<string | null>(null)
+  const { preferences, loading, error, message, getPreferences, uploadFile } =
+    usePreference()
+
+  useEffect(() => {
+    getPreferences()
+  }, [])
 
   // Handle file selection
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0] // Get the first file
+    const file = event.target.files?.[0]
+    console.log('File changed', file)
     if (file) {
-      setSelectedFile(file) // Update the state with the selected file
+      setSelectedFile(file)
     }
   }
 
-  // Handle form submission
+  // Handle form submission for file upload
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
@@ -23,33 +28,61 @@ export const Search: React.FC = () => {
       return
     }
 
-    const message = await updatePreference(selectedFile)
-    setMessage(message)
+    uploadFile(selectedFile)
   }
 
   return (
     <div>
       <h1>Search Page</h1>
+      <p>
+        {preferences
+          ? 'Current preferece has ' + preferences.length + ' rules'
+          : 'No preference file uploaded yet'}
+      </p>
 
-      {/* Form to handle file uploads */}
       <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="fileInput">Upload CSV File:</label>
+        <p>
+          <label htmlFor="fileInput">Upload new CSV File:</label>
+        </p>
+        <p>
           <input
             type="file"
             id="fileInput"
             accept=".csv"
             onChange={handleFileChange}
+            style={{ display: 'none' }} // Hide the input
           />
-        </div>
 
-        <div>
-          <button type="submit">Upload</button>
-        </div>
+          <md-filled-button
+            onClick={(e: Event) => {
+              document.getElementById('fileInput')?.click()
+              e.preventDefault()
+            }}
+          >
+            Choose File
+          </md-filled-button>
+        </p>
+        <p>
+          {selectedFile ? (
+            <span>Selected file: {selectedFile.name}</span>
+          ) : (
+            <span>No file selected</span>
+          )}
+        </p>
+
+        <p>
+          <md-filled-button
+            type="submit"
+            disabled={!selectedFile ? true : null}
+          >
+            {loading ? 'Uploading...' : 'Upload'}
+          </md-filled-button>
+        </p>
       </form>
 
-      {/* Display the response message */}
+      {/* Display message or error */}
       {message && <p>{message}</p>}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
     </div>
   )
 }
