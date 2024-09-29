@@ -9,7 +9,6 @@ export const useProducts = () => {
   const mounted = useRef(false)
 
   const getProducts = async () => {
-    console.log('getProducts')
     try {
       setLoading(true)
       const data = await fetchProducts()
@@ -23,7 +22,6 @@ export const useProducts = () => {
   }
 
   useEffect(() => {
-    console.log('useEffect', mounted.current, reloadTrigger)
     // Prevent double fetch on initial mount due to Strict Mode
     if (!mounted.current || reloadTrigger) {
       getProducts()
@@ -33,7 +31,6 @@ export const useProducts = () => {
   }, [reloadTrigger])
 
   const reloadProducts = () => {
-    console.log('reloadProducts')
     setReloadTrigger(true) // Set reloadTrigger to true to trigger useEffect
   }
 

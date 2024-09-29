@@ -21,6 +21,7 @@ make init_db
   For production larger data is expected and serverside pagination+filtering is very important.
 - Did not used MUI or other library. Although we can build product fast and fancy, with responsive layout with best practises. But since (https://m3.material.io/) is strictly enforced, so only "@material/web@2.2.0" is used which uses Material 3.
 - All components are imported (import '@material/web/all') for simplicity for development that contributes 77.84 kB gzipped in the bundle. Ideally individual components can be imported to reduce bundle size.
+- Preference CSV is parsed on the service side for simplicity of the assignment. But it can be done on frontend, to give immidiate feedback to user if format is incorrect or something like that
 
 # Assumptions
 
@@ -43,9 +44,10 @@ make init_db
 
 # TODO
 
-dont reload inventory when changing pages
-search page
+- dont reload inventory when changing pages
 
-- checks if preferences file is already saved, then use it
-- show a button to upload it to server
--
+- search page
+  . checks if preferences file is already saved, then use it
+  . show a button to upload it to server
+
+- env variables ... API_BASE_URL dev and prod
