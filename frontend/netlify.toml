@@ -1,0 +1,8 @@
+[build]
+  base    = "frontend"
+  publish = "build"
+  command = "npm run build"
+
+[build.environment]
+  # If you have environment variables, set them here
+  REACT_APP_API_BASE_URL = "https://your-heroku-app.herokuapp.com"
