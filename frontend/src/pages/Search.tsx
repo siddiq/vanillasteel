@@ -1,19 +1,58 @@
 import React, { useEffect, useState } from 'react'
 import { usePreference } from '../hooks/usePreference'
+import { fetchProductsMatchedBtPreference } from '../services/api'
+import { Product } from '../types'
+import { WrapperProductsTable } from '../components/products-table/ProductsTable'
 
 export const Search: React.FC = () => {
+  const [products, setProducts] = useState([] as Product[])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<Error | null>(null)
+
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
-  const { preferences, loading, error, message, getPreferences, uploadFile } =
-    usePreference()
+
+  const preferenceHook = usePreference()
 
   useEffect(() => {
-    getPreferences()
+    ;(async function () {
+      try {
+        setLoading(true)
+        preferenceHook.getPreferences()
+
+        setProducts(await fetchProductsMatchedBtPreference())
+        setError(null)
+      } catch (err) {
+        setError(new Error('Failed to fetch products'))
+      } finally {
+        setLoading(false)
+      }
+    })()
   }, [])
+
+  if (loading) {
+    return (
+      <div style={{ textAlign: 'center' }}>
+        <md-circular-progress indeterminate></md-circular-progress>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="backend-error">
+        <p>
+          <md-typography>Network Error: Unable to fetch data.</md-typography>
+        </p>
+        <p>
+          {/* <md-filled-button onClick={reloadProducts}>Retry</md-filled-button> */}
+        </p>
+      </div>
+    )
+  }
 
   // Handle file selection
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
-    console.log('File changed', file)
     if (file) {
       setSelectedFile(file)
     }
@@ -28,15 +67,17 @@ export const Search: React.FC = () => {
       return
     }
 
-    uploadFile(selectedFile)
+    preferenceHook.uploadFile(selectedFile)
   }
 
   return (
     <div>
       <h1>Search Page</h1>
       <p>
-        {preferences && preferences.length > 0
-          ? 'Current preferece has ' + preferences.length + ' rules'
+        {preferenceHook.preferences && preferenceHook.preferences.length > 0
+          ? 'Current preferece has ' +
+            preferenceHook.preferences.length +
+            ' rules'
           : 'No preference file uploaded yet'}
       </p>
 
@@ -81,8 +122,10 @@ export const Search: React.FC = () => {
       </form>
 
       {/* Display message or error */}
-      {message && <p>{message}</p>}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {preferenceHook.message && <p>{preferenceHook.message}</p>}
+      {error && <p style={{ color: 'red' }}>{preferenceHook.error}</p>}
+
+      <WrapperProductsTable products={products} />
     </div>
   )
 }

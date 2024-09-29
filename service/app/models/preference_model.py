@@ -1,6 +1,5 @@
-from sqlalchemy import Column, Float, Integer, String
-
 from app.db.database import Base
+from sqlalchemy import Column, Float, Integer, String
 
 
 class Preference(Base):
@@ -13,5 +12,5 @@ class Preference(Base):
     choice = Column(String, nullable=True)
     width_min = Column(Float, nullable=True)
     width_max = Column(Float, nullable=True)
-    thickness_min = Column(Float, nullable=False)
-    thickness_max = Column(Float, nullable=False)
+    thickness_min = Column(Float, nullable=True)
+    thickness_max = Column(Float, nullable=True)

@@ -1,8 +1,7 @@
-from sqlalchemy import and_, or_
-from sqlalchemy.orm import Session
-
 from app.models.preference_model import Preference
 from app.models.product_model import Product
+from sqlalchemy import and_, or_
+from sqlalchemy.orm import Session
 
 
 def fetch_all_products(db: Session):
@@ -29,7 +28,7 @@ def fetch_products_matched_by_preference(db: Session):
             conditions.append(Product.form == rule.form)
         if rule.grade is not None:
             conditions.append(Product.grade == rule.grade)
-        if rule.choice is not None and rule.choice is not "":
+        if rule.choice is not None and rule.choice != "":
             conditions.append(Product.choice == rule.choice)
         if rule.width_min is not None:
             conditions.append(Product.width >= rule.width_min)

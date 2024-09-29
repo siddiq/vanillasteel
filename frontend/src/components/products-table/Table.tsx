@@ -1,5 +1,4 @@
-import { Product, PRODUCT_SORT_DIR, PRODUCT_SORT_KEY } from '../types'
-import './ProductsTable.css'
+import { Product, PRODUCT_SORT_DIR, PRODUCT_SORT_KEY } from '../../types'
 
 const formatDimensions = (product: Product) => {
   const dimensions: string[] = []
@@ -75,43 +74,41 @@ export const TableComponent = ({
   }
 
   return (
-    <div className="table-container">
-      <table className="products-table">
-        <thead>
-          <tr>
-            <th>Product</th>
-            <th className="form-and-choice" onClick={handleSortByFormAndChoice}>
-              Form & Choice{formAndChoiceDir}
-            </th>
-            <th>Grade & Surface</th>
-            <th>Finish</th>
-            <th>Dimensions (mm)</th>
-            <th>Quantity</th>
-            <th className="weight" onClick={handleSortByWeight}>
-              Weight (t) {weightDir}
-            </th>
-            <th>Location</th>
+    <table>
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th className="form-and-choice" onClick={handleSortByFormAndChoice}>
+            Form & Choice{formAndChoiceDir}
+          </th>
+          <th>Grade & Surface</th>
+          <th>Finish</th>
+          <th>Dimensions (mm)</th>
+          <th>Quantity</th>
+          <th className="weight" onClick={handleSortByWeight}>
+            Weight (t) {weightDir}
+          </th>
+          <th>Location</th>
+        </tr>
+      </thead>
+      <tbody>
+        {products.map((product) => (
+          <tr key={product.product_number}>
+            <td>{product.product_number}</td>
+            <td>
+              {product.form} {product.choice}
+            </td>
+            <td>
+              {product.grade} {product.surface ? product.surface : ''}
+            </td>
+            <td>{product.finish ? product.finish : 'N/A'}</td>
+            <td>{formatDimensions(product)}</td>
+            <td>{product.quantity}</td>
+            <td>{product.weight.toFixed(2)} t</td>
+            <td>{product.location}</td>
           </tr>
-        </thead>
-        <tbody>
-          {products.map((product) => (
-            <tr key={product.product_number}>
-              <td>{product.product_number}</td>
-              <td>
-                {product.form} {product.choice}
-              </td>
-              <td>
-                {product.grade} {product.surface ? product.surface : ''}
-              </td>
-              <td>{product.finish ? product.finish : 'N/A'}</td>
-              <td>{formatDimensions(product)}</td>
-              <td>{product.quantity}</td>
-              <td>{product.weight.toFixed(2)} t</td>
-              <td>{product.location}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+        ))}
+      </tbody>
+    </table>
   )
 }

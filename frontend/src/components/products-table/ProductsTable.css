@@ -1,9 +1,4 @@
-.table-container {
-  width: 100%;
-  margin: 20px 0;
-}
-
-.products-table {
+.products-table table {
   width: 100%;
   border-collapse: collapse;
   text-align: left;

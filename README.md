@@ -3,13 +3,27 @@
 ## start backend
 
 ```
+cd service
 make run_all
 ```
 
 ## Init db
 
 ```
+cd service
 make init_db
+```
+
+## API Docs
+
+http://localhost:8000/docs
+
+## Develop frontend
+
+```
+cd frontend
+npm i
+npm start
 ```
 
 # Decisions

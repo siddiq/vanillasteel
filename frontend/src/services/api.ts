@@ -13,6 +13,19 @@ export const fetchProducts = async () => {
   }
 }
 
+export const fetchProductsMatchedBtPreference = async () => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/v1/products/matched`)
+    if (!response.ok) {
+      throw new Error('Failed to fetch products')
+    }
+    return await response.json()
+  } catch (error) {
+    console.error('Error fetching products:', error)
+    throw error
+  }
+}
+
 export const fetchPreference = async () => {
   try {
     const response = await fetch(`${API_BASE_URL}/v1/preference`)

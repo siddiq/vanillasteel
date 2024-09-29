@@ -1,4 +1,7 @@
 def parse_float(value):
+    if value == '':
+        return None
+
     try:
         # Try to convert the value to a float directly
         return float(value)

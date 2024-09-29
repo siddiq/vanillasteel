@@ -1,22 +1,28 @@
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI
-
-from app.db.database import engine
-from app.models.product_model import Base
+from app.db.database import Base, engine
+from app.models.preference_model import Preference  # must import
+from app.models.product_model import Product  # must import
 from app.preference.preference_api import router as preference_router
 from app.products.products_api import router as products_router
+from fastapi import FastAPI
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Startup logic
+    # Startup logic: Create database tables
     Base.metadata.create_all(bind=engine)
     yield
     # Optional: Add shutdown logic here if needed
 
 
-app = FastAPI(lifespan=lifespan)
+# Initialize the FastAPI app with the lifespan function
+app = FastAPI(
+    title="Products and Matching API Docs",
+    description="This API provides product and preference management services.",
+    version="1.0.0",
+    lifespan=lifespan,  # Include the lifespan function here
+)
 
 
 @app.get("/ping")

@@ -1,12 +1,11 @@
-from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
-
 from app.db.database import get_db
 from app.products.products_service import (
     fetch_all_products,
     fetch_product_by_product_number,
     fetch_products_matched_by_preference,
 )
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.orm import Session
 
 router = APIRouter()
 

@@ -1,20 +1,26 @@
-"""
-Database Module
-"""
-
+import logging
 import os
 
 from dotenv import load_dotenv
-from sqlalchemy import create_engine
+from sqlalchemy import Column, Float, Integer, String, create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
 
-# Load environment variables from .env file
+# Load environment variables from the .env file
 load_dotenv()
 
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+# Database configuration
 DATABASE_URL = os.getenv(
     "DATABASE_URL", "postgresql://myuser:mypassword@localhost:5432/mydatabase"
 )
 
+# Log the database connection attempt (avoid logging sensitive information)
+logger.info("Connecting to the database...")
+
+# Set up the database engine and session
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
@@ -27,7 +33,3 @@ def get_db():
         yield db
     finally:
         db.close()
-
-
-# Create all tables
-Base.metadata.create_all(bind=engine)
