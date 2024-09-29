@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import { useProducts } from '../hooks/useProducts'
-import './Dashboard.css'
 import { Product, PRODUCT_SORT_DIR, PRODUCT_SORT_KEY } from '../types'
 import { TableComponent } from '../components/ProductsTable'
+import { PRODUCT_PAGE_SIZE } from '../constants'
+import { TablePaginator } from '../components/Paginator'
+import './Dashboard.css'
 
 // Define the type for error to include the message property
 interface ErrorType {
@@ -48,6 +50,7 @@ const sortAndPage = (
 export const Dashboard: React.FC = () => {
   const [key, setKey] = useState<PRODUCT_SORT_KEY>(PRODUCT_SORT_KEY.WEIGHT)
   const [dir, setDir] = useState<PRODUCT_SORT_DIR>(PRODUCT_SORT_DIR.DESC)
+  const [pageNumber, setPageNumber] = useState(0)
 
   const { products, loading, error, reloadProducts } = useProducts() as {
     products: Product[]
@@ -78,25 +81,42 @@ export const Dashboard: React.FC = () => {
     reloadProducts()
   }
 
-  const sortedAndPaged = sortAndPage(products, key, dir, 0, 10)
+  const sortedAndPaged = sortAndPage(
+    products,
+    key,
+    dir,
+    pageNumber * PRODUCT_PAGE_SIZE,
+    PRODUCT_PAGE_SIZE
+  )
   const handleResort = (key: PRODUCT_SORT_KEY, dir: PRODUCT_SORT_DIR) => {
     setKey(key)
     setDir(dir)
   }
 
+  const totalPages = Math.ceil(products.length / PRODUCT_PAGE_SIZE)
+
   return (
     <div className="dashboard">
       <h1>Dashboard Page</h1>
       <h2>Products</h2>
-      <p>total products {products.length}</p>
-      <p>total volume (t) {totalVolumeInTons}</p>
+      <p>Total products = {products.length}</p>
+      <p>Total volume (t) = {totalVolumeInTons.toFixed(2)}</p>
+      <div className="page-number">
+        Page {pageNumber + 1} of {totalPages}
+      </div>
       <TableComponent
         products={sortedAndPaged}
         sortedBy={key}
         sortedByDir={dir}
         resort={handleResort}
       />
-      <md-filled-button onClick={handleRefresh}>Reload</md-filled-button>
+
+      <TablePaginator
+        pageNumber={pageNumber}
+        totalPages={totalPages}
+        setPageNumber={setPageNumber}
+      />
+      <md-filled-button onClick={handleRefresh}>Refresh Data</md-filled-button>
     </div>
   )
 }

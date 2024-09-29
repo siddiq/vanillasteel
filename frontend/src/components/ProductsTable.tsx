@@ -88,7 +88,7 @@ export const TableComponent = ({
             <th>Dimensions (mm)</th>
             <th>Quantity</th>
             <th className="weight" onClick={handleSortByWeight}>
-              Total Weight (tons) {weightDir}
+              Weight (t) {weightDir}
             </th>
             <th>Location</th>
           </tr>
@@ -106,8 +106,7 @@ export const TableComponent = ({
               <td>{product.finish ? product.finish : 'N/A'}</td>
               <td>{formatDimensions(product)}</td>
               <td>{product.quantity}</td>
-              <td>{(product.weight / 1000).toFixed(2)} tons</td>{' '}
-              {/* Assuming weight is in kg, converting to tons */}
+              <td>{product.weight.toFixed(2)} t</td>
               <td>{product.location}</td>
             </tr>
           ))}
