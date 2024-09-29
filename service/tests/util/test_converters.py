@@ -1,5 +1,7 @@
 import unittest
+
 from app.util.converters import parse_float
+
 
 class TestParseFloat(unittest.TestCase):
 
@@ -25,4 +27,3 @@ class TestParseFloat(unittest.TestCase):
         with self.assertRaises(ValueError) as context:
             parse_float("abc")
         self.assertTrue("Invalid value: abc" in str(context.exception))
-

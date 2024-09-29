@@ -1,9 +1,12 @@
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
-from app.products.products_api import router as products_router
-from app.preference.preference_api import router as preference_router
+
 from app.db.database import engine
 from app.models.product_model import Base
-from contextlib import asynccontextmanager
+from app.preference.preference_api import router as preference_router
+from app.products.products_api import router as products_router
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -12,11 +15,14 @@ async def lifespan(app: FastAPI):
     yield
     # Optional: Add shutdown logic here if needed
 
+
 app = FastAPI(lifespan=lifespan)
+
 
 @app.get("/ping")
 def ping():
     return {"data": "pong"}
+
 
 # Include API routes
 app.include_router(products_router, prefix="/v1/products")

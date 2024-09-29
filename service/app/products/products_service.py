@@ -1,7 +1,8 @@
-from sqlalchemy.orm import Session
 from sqlalchemy import and_, or_
-from app.models.product_model import Product
+from sqlalchemy.orm import Session
+
 from app.models.preference_model import Preference
+from app.models.product_model import Product
 
 
 def fetch_all_products(db: Session):
