@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useProducts } from '../hooks/useProducts'
 import { Product, PRODUCT_SORT_DIR, PRODUCT_SORT_KEY } from '../types'
 import { TableComponent } from '../components/ProductsTable'
 import { PRODUCT_PAGE_SIZE } from '../constants'
 import { TablePaginator } from '../components/Paginator'
 import './Dashboard.css'
+import { fetchProducts } from '../services/api'
 
 // Define the type for error to include the message property
 interface ErrorType {
@@ -52,12 +53,29 @@ export const Dashboard: React.FC = () => {
   const [dir, setDir] = useState<PRODUCT_SORT_DIR>(PRODUCT_SORT_DIR.DESC)
   const [pageNumber, setPageNumber] = useState(0)
 
-  const { products, loading, error, reloadProducts } = useProducts() as {
-    products: Product[]
-    loading: boolean
-    error: ErrorType | null
-    reloadProducts: () => void
-  }
+  // const { products, loading, error, reloadProducts } = useProducts() as {
+  //   products: Product[]
+  //   loading: boolean
+  //   error: ErrorType | null
+  //   reloadProducts: () => void
+  // }
+  const [products, setProducts] = useState([] as Product[])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<Error | null>(null)
+
+  useEffect(() => {
+    ;(async function () {
+      try {
+        setLoading(true)
+        setProducts(await fetchProducts())
+        setError(null)
+      } catch (err) {
+        setError(new Error('Failed to fetch products'))
+      } finally {
+        setLoading(false)
+      }
+    })()
+  }, [])
 
   if (loading) {
     return (
@@ -74,7 +92,7 @@ export const Dashboard: React.FC = () => {
           <md-typography>Network Error: Unable to fetch data.</md-typography>
         </p>
         <p>
-          <md-filled-button onClick={reloadProducts}>Retry</md-filled-button>
+          {/* <md-filled-button onClick={reloadProducts}>Retry</md-filled-button> */}
         </p>
       </div>
     )
@@ -121,7 +139,7 @@ export const Dashboard: React.FC = () => {
         totalPages={totalPages}
         setPageNumber={setPageNumber}
       />
-      <md-filled-button onClick={reloadProducts}>Refresh Data</md-filled-button>
+      {/* <md-filled-button onClick={reloadProducts}>Refresh Data</md-filled-button> */}
     </div>
   )
 }

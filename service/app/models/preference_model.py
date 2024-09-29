@@ -12,5 +12,5 @@ class Preference(Base):
     width_min = Column(Float, nullable=True)   
     width_max = Column(Float, nullable=True)   
     thickness_min = Column(Float, nullable=False) 
-    thickness_max = Column(String, nullable=False)  
+    thickness_max = Column(Float, nullable=False)  
 

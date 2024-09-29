@@ -35,7 +35,7 @@ export const Search: React.FC = () => {
     <div>
       <h1>Search Page</h1>
       <p>
-        {preferences
+        {preferences && preferences.length > 0
           ? 'Current preferece has ' + preferences.length + ' rules'
           : 'No preference file uploaded yet'}
       </p>
