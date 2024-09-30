@@ -44,7 +44,7 @@ export const updatePreference = async (file: File) => {
   formData.append('file', file)
 
   try {
-    const response = await fetch('/v1/preference/upload-csv', {
+    const response = await fetch(`${API_BASE_URL}/v1/preference/upload-csv`, {
       method: 'POST',
       body: formData
     })
