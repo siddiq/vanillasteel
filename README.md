@@ -1,5 +1,17 @@
 # Search Orders
 
+## Develop frontend
+
+```
+cd frontend
+npm i
+npm start
+```
+
+## Prod frontend
+
+https://ornate-chebakia-41e91c.netlify.app/
+
 ## start backend
 
 ```
@@ -18,12 +30,10 @@ make init_db
 
 http://localhost:8000/docs
 
-## Develop frontend
+## Production logs
 
 ```
-cd frontend
-npm i
-npm start
+heroku logs --tail --app stormy-basin-82290
 ```
 
 # Decisions
@@ -43,19 +53,3 @@ npm start
 - Product Number seems to be unique id
 - Fractions are supposed to be considered valid data. So values like 7/3 are converted so that they can be stored as float.
 - For matching, a row is considered matched if any of the rule matches all constriants for that rule.
-
-#
-
-# TODO
-
-- dont reload inventory when changing pages ?????
-
-- search page
-  . checks if preferences file is already saved, then use it
-  . show a button to upload it to server
-
-- matching functionality
-
-- env variables ... API_BASE_URL dev and prod
-
-- fix, code formatting, linting etc etc
