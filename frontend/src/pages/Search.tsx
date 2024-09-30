@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { usePreference } from '../hooks/usePreference'
 import { fetchProductsMatchedBtPreference } from '../services/api'
 import { Product } from '../types'
-import { WrapperProductsTable } from '../components/products-table/ProductsTable'
+import { ProductsTable } from '../components/products-table/ProductsTable'
 
 export const Search: React.FC = () => {
   const [products, setProducts] = useState([] as Product[])
@@ -134,9 +134,7 @@ export const Search: React.FC = () => {
       {preferenceHook.message && <p>{preferenceHook.message}</p>}
       {error && <p style={{ color: 'red' }}>{preferenceHook.error}</p>}
 
-      {preferencesAreAvailable ? (
-        <WrapperProductsTable products={products} />
-      ) : null}
+      {preferencesAreAvailable ? <ProductsTable products={products} /> : null}
     </div>
   )
 }

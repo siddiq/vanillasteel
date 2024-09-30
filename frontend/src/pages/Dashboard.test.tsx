@@ -9,7 +9,7 @@ jest.mock('../services/api', () => ({
 }))
 
 jest.mock('../components/products-table/ProductsTable', () => ({
-  WrapperProductsTable: ({ products }: { products: Product[] }) => (
+  ProductsTable: ({ products }: { products: Product[] }) => (
     <div data-testid="products-table">
       {products.map((product) => (
         <div key={product.product_number}>{product.form}</div>

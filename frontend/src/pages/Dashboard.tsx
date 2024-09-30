@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Product } from '../types'
 import './Dashboard.css'
 import { fetchProducts } from '../services/api'
-import { WrapperProductsTable } from '../components/products-table/ProductsTable'
+import { ProductsTable } from '../components/products-table/ProductsTable'
 
 export const Dashboard: React.FC = () => {
   const [products, setProducts] = useState([] as Product[])
@@ -47,7 +47,7 @@ export const Dashboard: React.FC = () => {
   return (
     <div className="dashboard">
       <h1>Dashboard Page</h1>
-      <WrapperProductsTable products={products} />
+      <ProductsTable products={products} />
     </div>
   )
 }

@@ -6,11 +6,11 @@ import { PRODUCT_PAGE_SIZE } from '../../constants'
 import { sortAndPaginate } from '../../util/sorting'
 import './ProductsTable.css'
 
-interface Props {
+interface ProductsTableProps {
   products: Product[]
 }
 
-export const WrapperProductsTable = ({ products }: Props) => {
+export const ProductsTable = ({ products }: ProductsTableProps) => {
   const [key, setKey] = useState<PRODUCT_SORT_KEY>(PRODUCT_SORT_KEY.WEIGHT)
   const [dir, setDir] = useState<PRODUCT_SORT_DIR>(PRODUCT_SORT_DIR.DESC)
   const [pageNumber, setPageNumber] = useState(0)
