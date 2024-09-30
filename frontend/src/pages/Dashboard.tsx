@@ -4,11 +4,6 @@ import './Dashboard.css'
 import { fetchProducts } from '../services/api'
 import { WrapperProductsTable } from '../components/products-table/ProductsTable'
 
-// Define the type for error to include the message property
-// interface ErrorType {
-//   message: string
-// }
-
 export const Dashboard: React.FC = () => {
   const [products, setProducts] = useState([] as Product[])
   const [loading, setLoading] = useState(true)
@@ -31,7 +26,10 @@ export const Dashboard: React.FC = () => {
   if (loading) {
     return (
       <div style={{ textAlign: 'center' }}>
-        <md-circular-progress indeterminate></md-circular-progress>
+        <md-circular-progress
+          indeterminate
+          role="progressbar"
+        ></md-circular-progress>
       </div>
     )
   }
@@ -42,9 +40,6 @@ export const Dashboard: React.FC = () => {
         <p>
           <md-typography>Network Error: Unable to fetch data.</md-typography>
         </p>
-        <p>
-          {/* <md-filled-button onClick={reloadProducts}>Retry</md-filled-button> */}
-        </p>
       </div>
     )
   }
@@ -52,7 +47,6 @@ export const Dashboard: React.FC = () => {
   return (
     <div className="dashboard">
       <h1>Dashboard Page</h1>
-
       <WrapperProductsTable products={products} />
     </div>
   )

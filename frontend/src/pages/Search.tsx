@@ -34,7 +34,10 @@ export const Search: React.FC = () => {
   if (loading) {
     return (
       <div style={{ textAlign: 'center' }}>
-        <md-circular-progress indeterminate></md-circular-progress>
+        <md-circular-progress
+          indeterminate
+          role="progressbar"
+        ></md-circular-progress>
       </div>
     )
   }
@@ -87,7 +90,7 @@ export const Search: React.FC = () => {
           : 'No preference file uploaded yet'}
       </p>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} data-testid="form">
         <p>
           <label htmlFor="fileInput">Upload new CSV File:</label>
         </p>
