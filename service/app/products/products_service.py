@@ -21,6 +21,10 @@ def fetch_products_matched_by_preference(db: Session):
     for rule in preferences:
         conditions = []
 
+        # Only match that are > 10 tons
+        conditions.append(Product.weight >= 10)
+
+        # Apply Material, Form, Choice, Grade and Dimensions
         # Check each condition and add it only if it's not None
         if rule.material is not None:
             conditions.append(Product.material == rule.material)
